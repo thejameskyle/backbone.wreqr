@@ -23,9 +23,13 @@ module.exports = function(grunt) {
     },
 
     preprocess: {
-      core_build: {
-        src: 'src/wreqr.js',
+      umd: {
+        src: 'src/build/backbone.wreqr.js',
         dest: 'lib/backbone.wreqr.js'
+      },
+      bare: {
+        src: 'src/build/backbone.wreqr.bare.js',
+        dest: 'lib/backbone.wreqr.bare.js'
       }
     },
 
@@ -35,9 +39,13 @@ module.exports = function(grunt) {
           version: '<%= meta.version %>'
         }
       },
-      core: {
-        src: '<%= preprocess.core_build.dest %>',
-        dest: '<%= preprocess.core_build.dest %>'
+      umd: {
+        src: '<%= preprocess.umd.dest %>',
+        dest: '<%= preprocess.umd.dest %>'
+      },
+      bare: {
+        src: '<%= preprocess.bare.dest %>',
+        dest: '<%= preprocess.bare.dest %>'
       }
     },
 
@@ -45,9 +53,13 @@ module.exports = function(grunt) {
       options: {
         banner: "<%= meta.banner %>"
       },
-      build: {
-        src: 'lib/backbone.wreqr.js',
-        dest: 'lib/backbone.wreqr.js'
+      umd: {
+        src: '<%= preprocess.umd.dest %>',
+        dest: '<%= preprocess.umd.dest %>'
+      },
+      bare: {
+        src: '<%= preprocess.bare.dest %>',
+        dest: '<%= preprocess.bare.dest %>'
       }
     },
 
@@ -55,12 +67,21 @@ module.exports = function(grunt) {
       options: {
         banner: "<%= meta.banner %>"
       },
-      core : {
+      umd : {
         src : 'lib/backbone.wreqr.js',
         dest : 'lib/backbone.wreqr.min.js',
         options : {
           sourceMap : 'lib/backbone.wreqr.map',
           sourceMappingURL : 'backbone.wreqr.map',
+          sourceMapPrefix : 2
+        }
+      },
+      bare : {
+        src : 'lib/backbone.wreqr.bare.js',
+        dest : 'lib/backbone.wreqr.bare.min.js',
+        options : {
+          sourceMap : 'lib/backbone.wreqr.bare.map',
+          sourceMappingURL : 'backbone.wreqr.bare.map',
           sourceMapPrefix : 2
         }
       }
@@ -92,7 +113,7 @@ module.exports = function(grunt) {
       },
       wreqr: {
         src : [
-          'src/wreqr.js',
+          'src/build/backbone.wreqr.js',
           'spec/javascripts/support/wreqrHelper.js',
           'src/wreqr.handlers.js',
           'src/wreqr.*.js'
